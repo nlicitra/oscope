@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "d3": "^4.7.3"
+    "d3": "^4.7.3",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "css-loader": "^0.26.1",
