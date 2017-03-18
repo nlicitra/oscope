@@ -2,7 +2,6 @@ require("file-loader?name=[name].[ext]!./index.html")
 const lodash = require("lodash")
 const D3 = require("d3")
 
-
 const ctx = new AudioContext()
 
 const audio = document.body.querySelector("#audio")
@@ -28,6 +27,7 @@ document.getElementById('file').addEventListener('change', loadFile, false);
 const createSVG = (parent, height, width) => {
     return D3.select(parent)
              .append("svg")
+             .attr("id", "thing")
              .attr("height", height)
              .attr("width", width)
 }
@@ -36,6 +36,9 @@ const HEIGHT = 300
 const WIDTH = 1200
 const svg = createSVG("body", HEIGHT, WIDTH)
 
+
+svg.style("border-style", "solid")
+
 svg.selectAll("rect")
     .data(dataArray)
     .enter()
@@ -43,9 +46,44 @@ svg.selectAll("rect")
     .attr("x", (d, i) => i * (WIDTH / dataArray.length))
     .attr("width", Math.max((WIDTH / dataArray.length) - 1, 0))
 
+svg.append("line").attr("id", "threshold-marker")
+svg.append("line").attr("id", "threshold")
+
+
+const updateThresholdLine = (Y) => {
+    console.log(svg.select("#threshold-marker"))
+    svg.select("#threshold-marker")
+        .attr("x1", 0)
+        .attr("y1", Y-71)
+        .attr("x2", WIDTH)
+        .attr("y2", Y-71)
+        .attr("stroke-width", 2)
+        .attr("stroke", "black")
+}
+
+document.getElementById("thing").addEventListener("mousemove", (event) => {
+    console.log(`(${event.clientX},${event.clientY})`)
+    const Y = event.clientY
+    updateThresholdLine(Y)
+})
+
+document.getElementById("thing").addEventListener("click", (event) => {
+    THRESHOLD = ((HEIGHT - (event.clientY - 71)) / HEIGHT) * 255
+    svg.select("#threshold")
+        .attr("x1", 0)
+        .attr("y1", event.clientY-71)
+        .attr("x2", WIDTH)
+        .attr("y2", event.clientY-71)
+        .attr("stroke-width", 2)
+        .attr("stroke", "blue")
+})
+
+let THRESHOLD = 0.95 * 255
+
 const throttledRemove = lodash.debounce(() => {
         console.log("removing")
         D3.select("#bumper").classed("bump", false)
+        bumpLocked = false
 }, 500)
 
 const throttledAdd = lodash.throttle(() => {
@@ -54,11 +92,18 @@ const throttledAdd = lodash.throttle(() => {
         throttledRemove()
 }, 500)
 
-function triggerBump() {
-    throttledAdd()
+
+function triggerBump(bumper) {
+    // throttledAdd()
+    if (!bumper.classed("bump")) {
+        console.log("DOING IT")
+        bumper.classed("bump", true)
+        setTimeout(() => {
+            bumper.classed("bump", false)
+        }, 300)
+    }
 }
 
-const THRESHOLD = 0.8 * 255
 const INDEX = 5
 function render () {
     requestAnimationFrame(render)
@@ -73,7 +118,7 @@ function render () {
 
     if (dataArray[INDEX] > THRESHOLD) {
         console.log("triggered", dataArray[INDEX])
-        triggerBump()
+        triggerBump(D3.selectAll(".bumpable"))
     }
 }
 
