@@ -3,10 +3,13 @@ export default class OscopeAudioSource {
         const ctx = new AudioContext()
         const source = ctx.createMediaElementSource(audioElem)
         this.analyser  = ctx.createAnalyser()
+        this.filter  = ctx.createBiquadFilter()
+        this.filter.frequency.value = this.filter.frequency.maxValue
         this.data = [new Uint8Array(1024)]
 
-        source.connect(this.analyser)
-        source.connect(ctx.destination)
+        source.connect(this.filter)
+        this.filter.connect(this.analyser)
+        this.analyser.connect(ctx.destination)
         this.analyser.fftSize = 2048;
         this.bands = this.analyser.frequencyBinCount
     }

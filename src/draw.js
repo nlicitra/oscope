@@ -54,13 +54,14 @@ export default class OscopeSVG {
     } 
 
     setUpData(data) {
+        const space = 1 - (data.length / 1024)
         this.svg.selectAll("rect").remove()
         this.svg.selectAll("rect")
             .data(data)
             .enter()
             .append("rect")
             .attr("x", (d, i) => i * (WIDTH / data.length))
-            .attr("width", Math.max((WIDTH / data.length) - 1, 0))
+            .attr("width", Math.max((WIDTH / data.length) - space, 0))
     }
 
     setBands(num) {
@@ -69,11 +70,12 @@ export default class OscopeSVG {
     }
 
     render() {
+        const size = this.source.data.length
         this.svg.selectAll('rect')
             .data(this.source.getData())
             .attr("y", (d) => HEIGHT - d)
             .attr("height", (d) => d)
-            .attr("fill", (d) => `rgb(144,200,${d[0]})`)
+            .attr("fill", (d, i) => D3.interpolateCool(i/size))
 
         requestAnimationFrame(this.render.bind(this))
 

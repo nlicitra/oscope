@@ -12,9 +12,14 @@
   <header>📻</header>
   <input type="file" id="file" name="file" />
   <audio id="audio" controls></audio>
-  <audio id="container"></audio>
   <button class="bumpable" style="width: 100px; height: 50px">:D</button>
-  <input id="bands" value="1024" type="range" min="1" max="1024" />
+  <fieldset>
+    <label>Bands</label>
+    <input label="Bands" id="bands" value="1024" type="range" min="1" max="1024" />
+
+    <label>Cutoff</label>
+    <input label="Cutoff" id="cutoff" value="22050" type="range" min="0" max="22050" />
+  </fieldset>
   <script src="bundle.js"></script>
 </body>
 </html>
