@@ -5,17 +5,11 @@ module.exports = {
         publicPath: '/dist/',
         filename: "bundle.js"
     },
-    node: {
-        fs: "empty"
-    },
     module: {
-        loaders: [
+        rules: [
             {
-                test: /\.scss$/,
-                loaders: ['style', 'css', 'sass']
-            }, {
-                test: /\.json$/,
-                loader: 'json'
+                test: /\.css$/,
+                loaders: ['style-loader', 'css-loader']
             }
         ]
     }

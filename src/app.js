@@ -1,4 +1,6 @@
+require("./style.css")
 require("file-loader?name=[name].[ext]!./index.html")
+
 const lodash = require("lodash")
 const D3 = require("d3")
 
@@ -12,7 +14,7 @@ source.connect(analyser)
 source.connect(ctx.destination)
 
 analyser.fftSize = 2048;
-const bufferLength = 200 || analyser.frequencyBinCount;
+const bufferLength = analyser.frequencyBinCount;
 const dataArray = new Uint8Array(bufferLength);
 analyser.getByteFrequencyData(dataArray);
 
