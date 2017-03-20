@@ -23,7 +23,7 @@ const yValue = (Y) => {
     return val < 0 ? 0 : val
 }
 
-export default class OscopeSVG {
+module.exports = class OscopeSVG {
     constructor(parent, source) {
         this.svg = setUpSVG(parent)
         this.threshold = 255

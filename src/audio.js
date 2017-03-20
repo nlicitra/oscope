@@ -1,4 +1,4 @@
-export default class OscopeAudioSource {
+module.exports = class OscopeAudioSource {
     constructor(audioElem) {
         const ctx = new AudioContext()
         const source = ctx.createMediaElementSource(audioElem)
@@ -12,6 +12,13 @@ export default class OscopeAudioSource {
         this.analyser.connect(ctx.destination)
         this.analyser.fftSize = 2048;
         this.bands = this.analyser.frequencyBinCount
+
+        // Get file
+        function loadFile(evt) {
+            const file = evt.target.files[0]
+            audioElem.src = URL.createObjectURL(file)
+        }
+        document.getElementById('file').addEventListener('change', loadFile, false);
     }
 
     set bands(value) {
@@ -28,12 +35,3 @@ export default class OscopeAudioSource {
     }
 
 }
-
-
-// Get file
-function loadFile(evt) {
-    const file = evt.target.files[0]
-    audio.src = URL.createObjectURL(file)
-    audio.play()
-}
-document.getElementById('file').addEventListener('change', loadFile, false);
