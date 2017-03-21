@@ -1,17 +1,24 @@
 module.exports = class OscopeAudioSource {
     constructor(audioElem) {
-        const ctx = new AudioContext()
-        const source = ctx.createMediaElementSource(audioElem)
-        this.analyser  = ctx.createAnalyser()
-        this.filter  = ctx.createBiquadFilter()
+        if (audioElem) {
+            this.bindToElement(audioElem)
+        }
+        this.ctx = new AudioContext()
+        this.analyser = this.ctx.createAnalyser()
+        this.filter = this.ctx.createBiquadFilter()
         this.filter.frequency.value = this.filter.frequency.maxValue
         this.data = [new Uint8Array(1024)]
 
-        source.connect(this.filter)
         this.filter.connect(this.analyser)
-        this.analyser.connect(ctx.destination)
+        this.analyser.connect(this.ctx.destination)
         this.analyser.fftSize = 2048;
         this.bands = this.analyser.frequencyBinCount
+
+    }
+
+    bindToElement(audioElem) {
+        const source = this.ctx.createMediaElementSource(audioElem)
+        source.connect(this.filter)
 
         // Get file
         function loadFile(evt) {
@@ -30,7 +37,9 @@ module.exports = class OscopeAudioSource {
     }
 
     getData() {
-        this.analyser.getByteFrequencyData(this.data)
+        if (this.analyser) {
+            this.analyser.getByteFrequencyData(this.data)
+        }
         return this.data
     }
 
