@@ -40,8 +40,28 @@ body {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: stretch;
+  padding: 4em;
 
   > div {
     text-align: center;
+  }
+}
+
+.track-tempo {
+  @util clearfix;
+  position: relative;
+  flex-basis: 33%;
+
+  > .tempo {
+    float: right;
+    right: 0;
+    top: 5em;
+    transform: rotate(270deg);
+    transform-origin: center;
+  }
+
+  > .bpm {
+    position: absolute;
+    bottom: 0;
   }
 }
