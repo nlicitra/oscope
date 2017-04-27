@@ -35,8 +35,13 @@ body {
 }
 
 .beatmatcher {
+  color: white !important;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: stretch;
+
+  > div {
+    text-align: center;
+  }
 }
