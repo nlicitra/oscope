@@ -82,16 +82,16 @@ audio, input {
 
 input[type="range"] {
   -webkit-appearance: none;
-  width: 40em;
+  width: 95vh;
   height: 20px;
   background: color(#171717 tint(15%));
   background-position: center;
   background-repeat: no-repeat;
-  position: absolute;
-  right: 0;
-  top: 10em;
   transform: rotate(270deg);
   transform-origin: center;
+  position: absolute;
+  right: -45em;
+  bottom: 21em;
 }
 
 input[type="range"]::-webkit-slider-thumb {
