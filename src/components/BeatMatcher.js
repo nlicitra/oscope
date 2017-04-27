@@ -20,24 +20,37 @@ module.exports = class BeatMatcher extends React.Component {
     render() {
         return (
             <div className="beatmatcher">
-                <div className="track track-left">
-                    <input type="file" id="file1" name="file" />
+                <div className="track">
+                    <div className="track-meta">
+                        <audio id="audio1" controls />
+                        <input type="file" id="file1" name="file" />
+                        <label name="master">
+                            <input type="radio" name="master" />
+                            Master
+                        </label>
+                    </div>
 
                     <div className="track-tempo">
                         <input label="audioTempo1" id="audioTempo1" className="tempo" defaultValue="1024" type="range" min="1" max="1024" />
                         <p className="bpm">128</p>
                     </div>
                 </div>
-                <audio id="audio1" controls />
-                <div className="track track-right">
-                    <input type="file" id="file2" name="file" />
+
+                <div className="track">
+                    <div className="track-meta">
+                        <audio id="audio2" controls />
+                        <input type="file" id="file2" name="file" />
+                        <label name="master">
+                            <input type="radio" name="master" />
+                            Master
+                        </label>
+                    </div>
 
                     <div className="track-tempo">
                         <input label="audioTempo2" id="audioTempo2" className="tempo" defaultValue="1024" type="range" min="1" max="1024" />
                         <p className="bpm">128</p>
                     </div>
                 </div>
-                <audio id="audio2" controls />
             </div>
         )
     }

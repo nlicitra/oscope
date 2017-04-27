@@ -1,5 +1,7 @@
 body {
   background: #171717;
+  margin: 0;
+  padding: 0;
 }
 
 @keyframes bounce {
@@ -40,31 +42,66 @@ body {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: stretch;
-  padding: 4em;
 
   > div {
-    text-align: center;
     width: 50%;
+    height: 100vh;
+    padding: 4em;
+
+    &:first-child {
+      background: black;
+    }
   }
 }
 
 .track-tempo {
   @util clearfix;
   position: relative;
-  flex-basis: 33%;
-
-  > .tempo {
-    float: right;
-    position: relative;
-    top: 6em;
-    transform: rotate(270deg);
-    transform-origin: center;
-  }
+  width: 100%;
+  min-height: 40em;
 
   > .bpm {
-    position: absolute;
-    bottom: 0;
-    top: 2em;
-    font-size: 2em;
+    font-size: 8em;
+    line-height: 1;
+    margin: 10px 0 0 0;
   }
+}
+
+audio, input {
+  display: block;
+  margin-bottom: 0.5em;
+
+  &[type="radio"] {
+    display: inline-block;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 40em;
+  height: 20px;
+  background: color(#171717 tint(15%));
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 0;
+  top: 10em;
+  transform: rotate(270deg);
+  transform-origin: center;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 82px;
+  height: 82px;
+  background: aquamarine;
+  border-radius: 1000px;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.2);
+  z-index: 3;
+  cursor: pointer;
 }
