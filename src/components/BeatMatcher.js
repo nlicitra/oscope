@@ -16,6 +16,14 @@ module.exports = class BeatMatcher extends React.Component {
         this.state.sourceB.bindToElement(
             document.querySelector("#audio2")
         )
+        document.querySelector("#audioTempo1").addEventListener('input', (event) => {
+            const val = Number(event.target.value)
+            document.querySelector("#audio1").playbackRate = 1 - (val/1000)
+        })
+        document.querySelector("#audioTempo2").addEventListener('input', (event) => {
+            const val = Number(event.target.value)
+            document.querySelector("#audio2").playbackRate = 1 - (val/1000)
+        })
     }
     render() {
         return (
@@ -24,7 +32,7 @@ module.exports = class BeatMatcher extends React.Component {
                     <input type="file" id="file1" name="file" />
 
                     <div className="track-tempo">
-                        <input label="audioTempo1" id="audioTempo1" className="tempo" defaultValue="1024" type="range" min="1" max="1024" />
+                        <input label="audioTempo1" id="audioTempo1" className="tempo" defaultValue="0" type="range" min="-100" max="100" />
                         <p className="bpm">128</p>
                     </div>
                 </div>
@@ -33,7 +41,7 @@ module.exports = class BeatMatcher extends React.Component {
                     <input type="file" id="file2" name="file" />
 
                     <div className="track-tempo">
-                        <input label="audioTempo2" id="audioTempo2" className="tempo" defaultValue="1024" type="range" min="1" max="1024" />
+                        <input label="audioTempo2" id="audioTempo2" className="tempo" defaultValue="0" type="range" min="-100" max="100" />
                         <p className="bpm">128</p>
                     </div>
                 </div>
