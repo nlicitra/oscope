@@ -18,15 +18,15 @@ module.exports = class BeatMatcher extends React.Component {
     }
     render() {
         return (
-            <div class="beatmatcher">
-                <div class="track track-left">
+            <div className="beatmatcher">
+                <div className="track track-left">
                     <input type="file" id="file1" name="file" />
                     <audio id="audio1" />
                 </div>
-                <div class="track-bpm">
-
+                <div className="track-bpm">
+                    BPM
                 </div>
-                <div class="track track-right">
+                <div className="track track-right">
                     <input type="file" id="file2" name="file" />
                     <audio id="audio2" />
                 </div>
