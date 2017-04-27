@@ -54,8 +54,8 @@ body {
 
   > .tempo {
     float: right;
-    right: 0;
-    top: 5em;
+    position: relative;
+    top: 6em;
     transform: rotate(270deg);
     transform-origin: center;
   }
@@ -63,5 +63,7 @@ body {
   > .bpm {
     position: absolute;
     bottom: 0;
+    top: 2em;
+    font-size: 2em;
   }
 }
