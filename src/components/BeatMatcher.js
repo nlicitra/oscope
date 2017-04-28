@@ -6,7 +6,9 @@ module.exports = class BeatMatcher extends React.Component {
         super(props)
         this.state = {
             sourceA: new OscopeAudioSource(null, "file1"),
-            sourceB: new OscopeAudioSource(null, "file2")
+            sourceB: new OscopeAudioSource(null, "file2"),
+            change1: 0,
+            change2: 0
         }
     }
     componentDidMount() {
@@ -18,11 +20,15 @@ module.exports = class BeatMatcher extends React.Component {
         )
         document.querySelector("#audioTempo1").addEventListener('input', (event) => {
             const val = Number(event.target.value)
+            this.state.change1 = (val/1000)
             document.querySelector("#audio1").playbackRate = 1 - (val/1000)
+            this.forceUpdate()
         })
         document.querySelector("#audioTempo2").addEventListener('input', (event) => {
             const val = Number(event.target.value)
+            this.state.change2 = (val/1000)
             document.querySelector("#audio2").playbackRate = 1 - (val/1000)
+            this.forceUpdate()
         })
     }
     render() {
@@ -40,7 +46,7 @@ module.exports = class BeatMatcher extends React.Component {
 
                     <div className="track-tempo">
                         <input label="audioTempo1" id="audioTempo1" className="tempo" defaultValue="0" type="range" min="-100" max="100" />
-                        <p className="bpm">128</p>
+                        <p className="bpm">{(this.state.change1 * -100).toFixed(2)}%</p>
                     </div>
                 </div>
 
@@ -56,7 +62,7 @@ module.exports = class BeatMatcher extends React.Component {
 
                     <div className="track-tempo">
                         <input label="audioTempo2" id="audioTempo2" className="tempo" defaultValue="0" type="range" min="-100" max="100" />
-                        <p className="bpm">128</p>
+                        <p className="bpm">{(this.state.change2 * -100).toFixed(2)}%</p>
                     </div>
                 </div>
             </div>
