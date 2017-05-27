@@ -4,3 +4,4 @@ audio/
 dist/
 package.json.bak
 audio/
+npm-debug.log
