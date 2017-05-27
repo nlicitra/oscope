@@ -3,7 +3,7 @@ module.exports = class OscopeAudioSource {
         this.ctx = ctx
         this.data = new Uint8Array(1024)
 
-        this.audio = document.createElement("audio")
+        this.audio = new Audio()
         this.audio.autoplay = false
         this.mediaSource = this.ctx.createMediaElementSource(this.audio)
 
@@ -18,6 +18,9 @@ module.exports = class OscopeAudioSource {
 
     setSourceUrl(url) {
         this.audio.src = url
+        if (this.onNewSourceUrl) {
+            this.onNewSourceUrl(url)
+        }
     }
 
     getData() {
@@ -47,6 +50,7 @@ module.exports = class OscopeAudioSource {
         if (this.audio.paused && this.readyForCue) {
             this.cuePoint = this.audio.currentTime
             this.readyForCue = false
+            this.onCue(this.cuePoint)
         } else {
             this.audio.currentTime = this.cuePoint
             this.play()

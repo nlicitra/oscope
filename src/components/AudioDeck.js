@@ -2,6 +2,7 @@ const React = require("react")
 const AudioFileSelector = require("./AudioFileSelector")
 const OscopeContext = require("./OscopeContext")
 const Spectrum = require("./Spectrum")
+const Waveform = require("./Waveform")
 
 module.exports = class AudioDeck extends OscopeContext {
     constructor(props) {
@@ -12,10 +13,18 @@ module.exports = class AudioDeck extends OscopeContext {
         }
     }
     componentDidMount() {
-        this.$element.querySelector("#audioTempo").addEventListener('input', (event) => {
+        const tempoInput = this.$element.querySelector("#audioTempo")
+        tempoInput.addEventListener('input', (event) => {
             const val = Number(event.target.value)
             this.state.change = (val/1000)
             this.source.audio.playbackRate = 1 - (val/1000)
+            this.forceUpdate()
+        })
+
+        tempoInput.addEventListener('dblclick', (event) => {
+            tempoInput.value = 0
+            this.state.change = 0
+            this.source.audio.playbackRate = 1
             this.forceUpdate()
         })
 
@@ -41,6 +50,7 @@ module.exports = class AudioDeck extends OscopeContext {
                 <div className="track-tempo">
                     <input label="audioTempo" id="audioTempo" className="tempo" defaultValue="0" type="range" min="-100" max="100" />
                     <p className="bpm">{(this.state.change * -100).toFixed(2)}%</p>
+                    <Waveform source={this.source} />
                     <Spectrum source={this.source} />
                     <button onClick={this.source.togglePlay.bind(this.source)}>❯||</button>
                     <button className="cue-button">CUE</button>
