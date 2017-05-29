@@ -1,17 +1,15 @@
+const AudioStream = require("./AudioStream")
+
 module.exports = class OscopeAudioSource {
     constructor(ctx) {
         this.ctx = ctx
-        this.data = new Uint8Array(1024)
 
         this.audio = new Audio()
         this.audio.autoplay = false
+
         this.mediaSource = this.ctx.createMediaElementSource(this.audio)
-
-        this.analyser = this.ctx.createAnalyser()
-        this.analyser.fftSize = 2048;
-
-        this.mediaSource.connect(this.analyser)
-        this.analyser.connect(this.ctx.destination)
+        this.mediaSource.connect(this.ctx.destination)
+        this.stream = new AudioStream(this.ctx, this.mediaSource)
 
         this.cuePoint = 0
     }
@@ -19,13 +17,8 @@ module.exports = class OscopeAudioSource {
     setSourceUrl(url) {
         this.audio.src = url
         if (this.onNewSourceUrl) {
-            this.onNewSourceUrl(url)
+            this.onNewSourceUrl(this.audio)
         }
-    }
-
-    getData() {
-        this.analyser.getByteFrequencyData(this.data)
-        return this.data
     }
 
     play() {

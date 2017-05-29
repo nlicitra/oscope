@@ -3,7 +3,7 @@ const SpectrumSVG = require("../services/Spectrum")
 
 module.exports = class Spectrum extends React.Component {
     componentDidMount() {
-        this.svg = new SpectrumSVG(this.$element, this.props.source)
+        this.svg = new SpectrumSVG(this.$element, this.props.stream)
         this.svg.render()
     }
 

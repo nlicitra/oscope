@@ -8,31 +8,29 @@ module.exports = class AudioDeck extends OscopeContext {
     constructor(props) {
         super(props)
         this.DeckInput = this.setUpInput(AudioFileSelector)
-        this.state = {
-            change: 0,
-        }
+        this.state = {change: 0}
     }
     componentDidMount() {
         const tempoInput = this.$element.querySelector("#audioTempo")
-        tempoInput.addEventListener('input', (event) => {
+        tempoInput.addEventListener("input", (event) => {
             const val = Number(event.target.value)
             this.state.change = (val/1000)
             this.source.audio.playbackRate = 1 - (val/1000)
             this.forceUpdate()
         })
 
-        tempoInput.addEventListener('dblclick', (event) => {
+        tempoInput.addEventListener("dblclick", () => {
             tempoInput.value = 0
             this.state.change = 0
             this.source.audio.playbackRate = 1
             this.forceUpdate()
         })
 
-        this.$element.querySelector("button.cue-button").addEventListener('mousedown', (event) => {
+        this.$element.querySelector("button.cue-button").addEventListener("mousedown", () => {
             this.source.cue()
         })
 
-        this.$element.querySelector("button.cue-button").addEventListener('mouseup', (event) => {
+        this.$element.querySelector("button.cue-button").addEventListener("mouseup", () => {
             this.source.resetToCuePoint()
         })
     }
@@ -51,7 +49,7 @@ module.exports = class AudioDeck extends OscopeContext {
                     <input label="audioTempo" id="audioTempo" className="tempo" defaultValue="0" type="range" min="-100" max="100" />
                     <p className="bpm">{(this.state.change * -100).toFixed(2)}%</p>
                     <Waveform source={this.source} />
-                    <Spectrum source={this.source} />
+                    <Spectrum stream={this.source.stream} />
                     <button onClick={this.source.togglePlay.bind(this.source)}>❯||</button>
                     <button className="cue-button">CUE</button>
                 </div>

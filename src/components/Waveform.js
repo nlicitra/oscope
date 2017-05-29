@@ -10,7 +10,7 @@ module.exports = class Waveform extends React.Component {
     }
 
     componentDidMount() {
-        this.state.wavesurfer = Wavesurfer.create({
+        const wavesurfer = Wavesurfer.create({
             audioContext: this.state.source.ctx,
             backend: "MediaElement",
             container: this.$element,
@@ -20,13 +20,11 @@ module.exports = class Waveform extends React.Component {
             progressColor: "#44ff9b",
             barWidth: 2
         })
-        this.state.source.onNewSourceUrl = (url) => {
-            this.state.wavesurfer.load(this.state.source.audio)
-        }
-        this.state.source.onCue = (timestamp) => {
-            this.state.wavesurfer.setTimeMarkers([timestamp])
-            this.state.wavesurfer.drawBuffer()
-        }
+        this.setState({wavesurfer})
+        this.setState((prev) => {
+            prev.source.onNewSourceUrl = (audio) => wavesurfer.load(audio)
+            return {source: prev.source}
+        })
     }
 
     render() {

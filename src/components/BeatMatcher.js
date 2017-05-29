@@ -6,6 +6,7 @@ module.exports = class BeatMatcher extends React.Component {
         return (
             <div className="beatmatcher">
                 <AudioDeck />
+                <AudioDeck />
             </div>
         )
     }

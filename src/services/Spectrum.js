@@ -1,23 +1,23 @@
 const D3 = require("d3")
 
-const setUpSVG = (parentSelector) => {
-    const parent = D3.select(parentSelector)
-    const svg = parent.append("svg")
+const setUpSVG = (containerSelector) => {
+    const container = D3.select(containerSelector)
+    const svg = container.append("svg")
     svg.attr("height", 300)
-        .attr("width", parent.node().getBoundingClientRect().width)
+        .attr("width", container.node().getBoundingClientRect().width)
         .style("border-style", "solid")
 
     return svg
 }
 
-module.exports = class OscopeSVG {
-    constructor(parent, source) {
+module.exports = class SpectrumSVG {
+    constructor(container, stream) {
         this.height = 300
-        this.svg = setUpSVG(parent)
-        this.width = () => D3.select(parent).node().getBoundingClientRect().width
-        this.source = source
-        this.setUpData(this.source.getData())
-    } 
+        this.svg = setUpSVG(container)
+        this.width = () => D3.select(container).node().getBoundingClientRect().width
+        this.stream = stream
+        this.setUpData(this.stream.getData())
+    }
 
     setUpData(data) {
         const space = 1 - (data.length / 1024)
@@ -31,9 +31,9 @@ module.exports = class OscopeSVG {
     }
 
     render() {
-        const size = this.source.getData().length
-        this.svg.selectAll('rect')
-            .data(this.source.getData())
+        const size = this.stream.getData().length
+        this.svg.selectAll("rect")
+            .data(this.stream.getData())
             .attr("y", (d) => this.height - d)
             .attr("height", (d) => d)
             .attr("fill", (d, i) => D3.interpolateCool(i/size))

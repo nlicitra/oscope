@@ -12,7 +12,7 @@ module.exports = class Analyser extends OscopeContext {
         return (
             <div>
                 <this.InputComponent />
-                <Spectrum source={this.source} />
+                <Spectrum stream={this.source.stream} />
             </div>
         )
     }
