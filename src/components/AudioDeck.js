@@ -15,23 +15,23 @@ module.exports = class AudioDeck extends OscopeContext {
         tempoInput.addEventListener("input", (event) => {
             const val = Number(event.target.value)
             this.state.change = (val/1000)
-            this.source.audio.playbackRate = 1 - (val/1000)
+            this.source().setPlaybackRate(1 - (val/1000))
             this.forceUpdate()
         })
 
         tempoInput.addEventListener("dblclick", () => {
             tempoInput.value = 0
             this.state.change = 0
-            this.source.audio.playbackRate = 1
+            this.source().setPlaybackRate(1)
             this.forceUpdate()
         })
 
         this.$element.querySelector("button.cue-button").addEventListener("mousedown", () => {
-            this.source.cue()
+            this.source().cue()
         })
 
         this.$element.querySelector("button.cue-button").addEventListener("mouseup", () => {
-            this.source.resetToCuePoint()
+            this.source().resetToCuePoint()
         })
     }
     render() {
@@ -48,9 +48,9 @@ module.exports = class AudioDeck extends OscopeContext {
                 <div className="track-tempo">
                     <input label="audioTempo" id="audioTempo" className="tempo" defaultValue="0" type="range" min="-100" max="100" />
                     <p className="bpm">{(this.state.change * -100).toFixed(2)}%</p>
-                    <Waveform source={this.source} />
-                    <Spectrum stream={this.source.stream} />
-                    <button onClick={this.source.togglePlay.bind(this.source)}>❯||</button>
+                    <Waveform source={this.source()} />
+                    <Spectrum stream={this.stream()} />
+                    <button onClick={this.source().togglePlay.bind(this.source())}>❯||</button>
                     <button className="cue-button">CUE</button>
                 </div>
             </div>

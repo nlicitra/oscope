@@ -14,29 +14,23 @@ module.exports = class SpectrumSVG {
     constructor(container, stream) {
         this.height = 300
         this.svg = setUpSVG(container)
-        this.width = () => D3.select(container).node().getBoundingClientRect().width
+        this.width = D3.select(container).node().getBoundingClientRect().width
         this.stream = stream
-        this.setUpData(this.stream.getData())
-    }
-
-    setUpData(data) {
-        const space = 1 - (data.length / 1024)
-        this.svg.selectAll("rect").remove()
-        this.svg.selectAll("rect")
-            .data(data)
-            .enter()
-            .append("rect")
-            .attr("x", (d, i) => i * (this.width() / data.length))
-            .attr("width", Math.max((this.width() / data.length) - space, 0))
     }
 
     render() {
-        const size = this.stream.getData().length
-        this.svg.selectAll("rect")
-            .data(this.stream.getData())
+        const data = this.stream.data()
+        const size = data.length
+        const space = (1 - (size / 1024))
+        const selection = this.svg.selectAll("rect").data(data)
             .attr("y", (d) => this.height - d)
             .attr("height", (d) => d)
+            .attr("width", Math.max((this.width / size) - space, 0))
             .attr("fill", (d, i) => D3.interpolateCool(i/size))
+            .attr("x", (d, i) => i * (this.width / size))
+
+        selection.exit().remove()
+        selection.enter().append("rect")
 
         requestAnimationFrame(this.render.bind(this))
     }

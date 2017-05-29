@@ -1,5 +1,3 @@
-const AudioStream = require("./AudioStream")
-
 module.exports = class OscopeAudioSource {
     constructor(ctx) {
         this.ctx = ctx
@@ -7,9 +5,8 @@ module.exports = class OscopeAudioSource {
         this.audio = new Audio()
         this.audio.autoplay = false
 
-        this.mediaSource = this.ctx.createMediaElementSource(this.audio)
-        this.mediaSource.connect(this.ctx.destination)
-        this.stream = new AudioStream(this.ctx, this.mediaSource)
+        this.element = this.ctx.createMediaElementSource(this.audio)
+        this.element.connect(this.ctx.destination)
 
         this.cuePoint = 0
     }
@@ -19,6 +16,10 @@ module.exports = class OscopeAudioSource {
         if (this.onNewSourceUrl) {
             this.onNewSourceUrl(this.audio)
         }
+    }
+
+    connect(node) {
+        this.element.connect(node)
     }
 
     play() {
@@ -31,12 +32,32 @@ module.exports = class OscopeAudioSource {
 
     pause() {
         this.audio.pause()
-        this.readyForCue = true
+    }
+
+    paused() {
+        this.audio.paused
+    }
+
+    seek(time) {
+        this.audio.currentTime = time
+    }
+
+    currentTime() {
+        return this.audio.currentTime
     }
 
     stop() {
-        this.audio.pause()
-        this.audio.currentTime = 0
+        this.pause()
+        this.seek(0)
+    }
+
+    setPlaybackRate(rate) {
+        this.audio.playbackRate = rate
+    }
+
+    resetToCuePoint() {
+        this.source.seek(this.cuePoint)
+        this.pause()
     }
 
     cue() {
@@ -45,13 +66,8 @@ module.exports = class OscopeAudioSource {
             this.readyForCue = false
             this.onCue(this.cuePoint)
         } else {
-            this.audio.currentTime = this.cuePoint
+            this.seek(this.cuePoint)
             this.play()
         }
-    }
-
-    resetToCuePoint() {
-        this.currentTime = this.cuePoint
-        this.audio.pause()
     }
 }

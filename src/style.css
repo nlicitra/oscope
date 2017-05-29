@@ -85,7 +85,7 @@ audio, input {
   }
 }
 
-input[type="range"] {
+input.tempo[type="range"] {
   -webkit-appearance: none;
   width: 95vh;
   height: 20px;
@@ -99,7 +99,7 @@ input[type="range"] {
   bottom: 21em;
 }
 
-input[type="range"]::-webkit-slider-thumb {
+input.tempo[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 82px;
   height: 82px;

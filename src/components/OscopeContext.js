@@ -1,21 +1,28 @@
 const React = require("react")
-const OscopeAudioSource = require("../services/OscopeAudioSource")
+const Context = require("../services/OscopeContext")
 
 module.exports = class OscopeContext extends React.Component {
     constructor(props) {
         super(props)
 
-        this.ctx = new AudioContext()
-        this.source = new OscopeAudioSource(this.ctx)
+        this.ctx = new Context()
     }
 
     setUpInput(Component) {
-        const source = this.source
+        const ctx = this.ctx
         return class extends React.Component {
             render() {
-                return <Component {...this.props} onSelect={(url) => source.setSourceUrl(url)} />
+                return <Component {...this.props} onSelect={(url) => ctx.setSourceUrl(url)} />
             }
         }
+    }
+
+    stream() {
+        return this.ctx.stream
+    }
+
+    source() {
+        return this.ctx.source
     }
 
     render() {
