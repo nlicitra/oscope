@@ -12,10 +12,12 @@ module.exports = class AudioStream {
     constructor(ctx, source) {
         this.ctx = ctx
         this.bands = 1024
-        this.buffer = new Uint8Array(1024)
 
         this.analyser = this.ctx.createAnalyser()
         this.analyser.fftSize = 2048
+
+        this.buffer = new Uint8Array(this.analyser.frequencyBinCount)
+        this.timeDomainBuffer = new Float32Array(this.analyser.frequencyBinCount)
 
         source.connect(this.analyser)
     }
@@ -27,5 +29,10 @@ module.exports = class AudioStream {
     data() {
         this.analyser.getByteFrequencyData(this.buffer)
         return parse(this.buffer, this.bands)
+    }
+
+    timeDomainData() {
+        this.analyser.getFloatTimeDomainData(this.timeDomainBuffer)
+        return this.timeDomainBuffer
     }
 }

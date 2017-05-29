@@ -6,7 +6,10 @@ module.exports = class OscopeAudioSource {
         this.audio.autoplay = false
 
         this.element = this.ctx.createMediaElementSource(this.audio)
-        this.element.connect(this.ctx.destination)
+        this.filter = this.ctx.createBiquadFilter()
+        this.filter.type = "lowpass"
+        this.element.connect(this.filter)
+        this.filter.connect(this.ctx.destination)
 
         this.cuePoint = 0
     }
@@ -19,7 +22,7 @@ module.exports = class OscopeAudioSource {
     }
 
     connect(node) {
-        this.element.connect(node)
+        this.filter.connect(node)
     }
 
     play() {
@@ -69,5 +72,9 @@ module.exports = class OscopeAudioSource {
             this.seek(this.cuePoint)
             this.play()
         }
+    }
+
+    setFilterFrequency(freq) {
+        this.filter.frequency.value = freq
     }
 }
