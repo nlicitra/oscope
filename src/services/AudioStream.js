@@ -1,11 +1,11 @@
 const lodash = require("lodash")
 
-const avg = (data) => lodash.sum(data) / data.length
+const avg = (data) => lodash.sum(data) / data.length //eslint-disable-line
+const max = (data) => Math.max(...data)
 
 const parse = (buffer, bands) => {
-    // const interval = buffer.length / ((bands - buffer.length) || 1)
     const interval = buffer.length / (bands || 1)
-    return lodash.chunk(buffer, interval).map(avg)
+    return lodash.chunk(buffer, interval).map(max)
 }
 
 module.exports = class AudioStream {
