@@ -14,7 +14,7 @@ module.exports = class Controls extends React.Component {
     render() {
         return (
             <div ref={(e) => this.$element = e}>
-                <label htmlFor="freq-input">Frequency</label>
+                <label className="control-label" htmlFor="freq-input">Frequency Cutoff</label>
                 <input id="freq-input" name="freq-input" defaultValue="16000" type="range" min="0" max="16000" />
             </div>
         )

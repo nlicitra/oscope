@@ -22,7 +22,8 @@ module.exports = class Analyser extends OscopeContext {
             <div ref={(e) => this.$element = e}>
                 <this.InputComponent />
                 <Spectrum stream={this.stream()} />
-                <input id="band-input" defaultValue="64" type="range" min="1" max="1024" />
+                <label className="control-label" htmlFor="band-input">Bands</label>
+                <input id="band-input" name="band-input" defaultValue="64" type="range" min="1" max="1024" />
                 <button onClick={this.source().togglePlay.bind(this.source())}>❯||</button>
                 <Oscilloscope stream={this.stream()} />
                 <Controls source={this.source()} />

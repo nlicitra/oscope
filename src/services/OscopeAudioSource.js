@@ -8,6 +8,7 @@ module.exports = class OscopeAudioSource {
         this.element = this.ctx.createMediaElementSource(this.audio)
         this.filter = this.ctx.createBiquadFilter()
         this.filter.type = "lowpass"
+        this.filter.frequency.value = this.filter.frequency.maxValue
         this.element.connect(this.filter)
         this.filter.connect(this.ctx.destination)
 

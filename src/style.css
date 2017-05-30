@@ -110,3 +110,7 @@ input.tempo[type="range"]::-webkit-slider-thumb {
   z-index: 3;
   cursor: pointer;
 }
+
+.control-label {
+    color: #DDD;
+}
