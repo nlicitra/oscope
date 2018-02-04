@@ -22,6 +22,10 @@ module.exports = class OscopeAudioSource {
         }
     }
 
+    hasSourceUrl() {
+        return this.audio && !!this.audio.src
+    }
+
     connect(node) {
         this.filter.connect(node)
     }

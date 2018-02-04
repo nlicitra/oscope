@@ -1,10 +1,10 @@
 const React = require("react")
 const AudioFileSelector = require("./AudioFileSelector")
-const OscopeContext = require("./OscopeContext")
+const OscopeComponentContext = require("./OscopeComponentContext")
 const Spectrum = require("./Spectrum")
 const Waveform = require("./Waveform")
 
-module.exports = class AudioDeck extends OscopeContext {
+module.exports = class AudioDeck extends OscopeComponentContext {
     constructor(props) {
         super(props)
         this.DeckInput = this.setUpInput(AudioFileSelector)

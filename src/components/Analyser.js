@@ -1,32 +1,27 @@
 const React = require("react")
-const AudioFileSelector = require("./AudioFileSelector")
+// const AudioFileSelector = require("./AudioFileSelector")
 const Controls = require("./Controls")
-const OscopeContext = require("./OscopeContext")
+const OscopeComponentContext = require("./OscopeComponentContext")
 const Oscilloscope = require("./Oscilloscope")
+// const LevelMeter = require("./LevelMeter")
 const Spectrum = require("./Spectrum")
+const Waveform = require("./Waveform")
 
-module.exports = class Analyser extends OscopeContext {
+module.exports = class Analyser extends OscopeComponentContext {
     constructor(props) {
         super(props)
-        this.InputComponent = this.setUpInput(AudioFileSelector)
-        this.stream().setBands(64)
-    }
-    componentDidMount() {
-        const bandInput = this.$element.querySelector("#band-input")
-        bandInput.addEventListener("input", (event) => {
-            this.stream().setBands(event.target.value)
-        })
+        //this.InputComponent = this.setUpInput(AudioFileSelector)
+        this.source().setSourceUrl("/dist/audio/music.mp3")
     }
     render() {
         return (
-            <div ref={(e) => this.$element = e}>
-                <this.InputComponent />
-                <Spectrum stream={this.stream()} />
-                <label className="control-label" htmlFor="band-input">Bands</label>
-                <input id="band-input" name="band-input" defaultValue="64" type="range" min="1" max="1024" />
-                <button onClick={this.source().togglePlay.bind(this.source())}>❯||</button>
-                <Oscilloscope stream={this.stream()} />
-                <Controls source={this.source()} />
+            <div className="analyzer-container" ref={(e) => this.$element = e}>
+                {/*<this.InputComponent />*/}
+                <Controls source={this.source()} stream={this.stream()}/>
+                <Waveform className="full" source={this.source()} />
+                <Spectrum className="full" stream={this.stream()} />
+                <Oscilloscope className="full" stream={this.stream()} />
+                {/*<LevelMeter stream={this.stream()} />*/}
             </div>
         )
     }

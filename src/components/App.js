@@ -7,9 +7,8 @@ module.exports = class App extends React.Component {
     render() {
         return (
         <Switch>
-            <Route path="/analyser" component={Analyser} />
             <Route path="/beatmatch" component={BeatMatcher} />
-            <Route path="*" component={BeatMatcher} />
+            <Route path="*" component={Analyser} />
         </Switch>
         )
     }

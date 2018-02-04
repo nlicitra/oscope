@@ -1,11 +1,11 @@
 const React = require("react")
-const Context = require("../services/OscopeContext")
+const OscopeContext = require("../services/OscopeContext")
 
-module.exports = class OscopeContext extends React.Component {
+module.exports = class OscopeComponentContext extends React.Component {
     constructor(props) {
         super(props)
 
-        this.ctx = new Context()
+        this.ctx = new OscopeContext()
     }
 
     setUpInput(Component) {

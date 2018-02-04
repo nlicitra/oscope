@@ -26,6 +26,10 @@ module.exports = class AudioStream {
         this.bands = val
     }
 
+    getBands() {
+        return this.bands
+    }
+
     data() {
         this.analyser.getByteFrequencyData(this.buffer)
         return parse(this.buffer, this.bands)
@@ -34,5 +38,10 @@ module.exports = class AudioStream {
     timeDomainData() {
         this.analyser.getFloatTimeDomainData(this.timeDomainBuffer)
         return this.timeDomainBuffer
+    }
+
+    getLevel() {
+        this.analyser.getByteFrequencyData(this.buffer)
+        return parse(this.buffer, 1)
     }
 }

@@ -38,7 +38,11 @@ body {
 
 .waveform {
     border: 3px solid #FFF;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
+
+    & > wave {
+        height: 235px !important;
+    }
 }
 
 .beatmatcher {
@@ -113,4 +117,36 @@ input.tempo[type="range"]::-webkit-slider-thumb {
 
 .control-label {
     color: #DDD;
+}
+
+.analyzer-container {
+    display: grid;
+    grid-template-rows: auto repeat(3, 240px);
+
+    & * {
+        box-sizing: border-box;
+    }
+
+    & > .full {
+        grid-column: 1 / -1;
+    }
+
+    & > * {
+        border: 1px solid white;
+    }
+}
+
+/* .spectrum, .oscilliscope, .gain-level { */
+/*     width: 100%; */
+/*     height: 100%; */
+/* } */
+
+.controls {
+    position: absolute;
+    right: 0px;
+    float: right;
+
+    & > * {
+        display: inline-block;
+    }
 }

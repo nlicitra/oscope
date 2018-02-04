@@ -1,6 +1,9 @@
+const ABS_PATH = __dirname // eslint-disable-line no-undef
+
+const CopyWebpackPlugin = require("copy-webpack-plugin")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
-    template: __dirname + "/src/index.html",
+    template: ABS_PATH + "/src/index.html",
     filename: "index.html",
     inject: "body"
 })
@@ -8,7 +11,7 @@ const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
 module.exports = {
     entry: "./src/app.js",
     output: {
-        path: __dirname + "/dist",
+        path: ABS_PATH + "/dist",
         filename: "bundle.js"
     },
     module: {
@@ -16,7 +19,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loaders: 'babel-loader'
+                loaders: "babel-loader"
             }, {
                 test: /\.css$/,
                 exclude: /node_modules/,
@@ -24,5 +27,10 @@ module.exports = {
             }
         ]
     },
-    plugins: [HTMLWebpackPluginConfig]
+    plugins: [
+        new CopyWebpackPlugin([
+            {from: "./audio/all_we_ever_needed.mp3", to: "./dist/audio/music.mp3"}
+        ]),
+        HTMLWebpackPluginConfig
+    ]
 }

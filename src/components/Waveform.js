@@ -18,8 +18,13 @@ module.exports = class Waveform extends React.Component {
             scrollParent: true,
             waveColor: "#4473ff",
             progressColor: "#44ff9b",
-            barWidth: 2
+            fillParent: true,
+            barWidth: 2,
+            barHeight: 1.5
         })
+        if (this.state.source.hasSourceUrl()) {
+            wavesurfer.load(this.state.source.audio)
+        }
         this.setState({wavesurfer})
         this.setState((prev) => {
             prev.source.onNewSourceUrl = (audio) => wavesurfer.load(audio)
@@ -28,6 +33,6 @@ module.exports = class Waveform extends React.Component {
     }
 
     render() {
-        return <div className="waveform" ref={(e) => this.$element = e}></div>
+        return <div className={`waveform ${this.props.className || ""}`} ref={(e) => this.$element = e}></div>
     }
 }
