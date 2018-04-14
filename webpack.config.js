@@ -7,6 +7,7 @@ const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
     filename: "index.html",
     inject: "body"
 })
+const {ProvidePlugin} = require("webpack")
 
 module.exports = {
     entry: "./src/app.js",
@@ -27,7 +28,15 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        alias: {
+            "wavesurfer.js": "wavesurfer"
+        }
+    },
     plugins: [
+        new ProvidePlugin({
+            "WaveSurfer": "wavesurfer"
+        }),
         new CopyWebpackPlugin([
             {from: "./audio/all_we_ever_needed.mp3", to: "./dist/audio/music.mp3"}
         ]),

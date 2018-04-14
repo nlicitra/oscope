@@ -10,7 +10,8 @@
     "react-dom": "^15.5.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "wavesurfer": "https://github.com/nlicitra/wavesurfer.js.git#temp-dist"
+    "react-wavesurfer": "^0.8.6",
+    "wavesurfer": "^1.3.4"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
